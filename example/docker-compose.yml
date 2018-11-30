@@ -1,0 +1,99 @@
+# docker compose to startup a local ES cluster
+version: '2.2'
+services:
+  elasticsearch_searchguard_1:
+    image: xtermi2/elasticsearch-searchguard
+    container_name: elasticsearch_searchguard_1
+    environment:
+      node.name: "elasticsearch_searchguard_1"
+      cluster.name: "my-cluster"
+      discovery.zen.ping.unicast.hosts: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
+      number_of_replicas: "1"
+      auto_expand_replicas: "0-all"
+      network.host: "0.0.0.0"
+      network.bind_host: "0.0.0.0"
+      bootstrap.memory_lock: "true"
+      ES_JAVA_OPTS: "-Xms500m -Xmx500m"
+      searchguard.ssl.transport.enabled: "true"
+      searchguard.ssl.transport.enable_openssl_if_available: "true"
+      searchguard.ssl.transport.pemcert_filepath: "../certificates/node.pem"
+      searchguard.ssl.transport.pemkey_filepath: "../certificates/node.key"
+      # TODO
+      searchguard.ssl.transport.pemkey_password: "TODO"
+      searchguard.ssl.transport.pemtrustedcas_filepath: "../certificates/root-ca.pem"
+      searchguard.ssl.transport.enforce_hostname_verification: "false"
+      searchguard.ssl.transport.resolve_hostname: "false"
+      searchguard.ssl.http.enabled: "true"
+      searchguard.ssl.http.pemcert_filepath: "../certificates/node.pem"
+      searchguard.ssl.http.pemkey_filepath: "../certificates/node.key"
+      # TODO
+      searchguard.ssl.http.pemkey_password: "TODO"
+      searchguard.ssl.http.pemtrustedcas_filepath: "../certificates/root-ca.pem"
+      searchguard.enterprise_modules_enabled: "false"
+      ROOT_CA: "../certificates/root-ca.pem"
+      ADMIN_PEM: "../certificates/admin.pem"
+      ADMIN_KEY: "../certificates/admin.key"
+      # TODO
+      ADMIN_KEY_PASS: "TODO"
+      ELASTIC_PWD: "elastic"
+      KIBANA_PWD: "kibana"
+      BEATS_PWD: "beats"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+    - "9200:9200"
+#    - "9300:9300"
+    restart: always
+    networks:
+    - esnet
+  elasticsearch_searchguard_2:
+    image: xtermi2/elasticsearch-searchguard
+    container_name: elasticsearch_searchguard_2
+    environment:
+      node.name: "elasticsearch_searchguard_2"
+      cluster.name: "my-cluster"
+      discovery.zen.ping.unicast.hosts: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
+      number_of_replicas: "1"
+      auto_expand_replicas: "0-all"
+      network.host: "0.0.0.0"
+      network.bind_host: "0.0.0.0"
+      bootstrap.memory_lock: "true"
+      ES_JAVA_OPTS: "-Xms500m -Xmx500m"
+      searchguard.ssl.transport.enabled: "true"
+      searchguard.ssl.transport.enable_openssl_if_available: "true"
+      searchguard.ssl.transport.pemcert_filepath: "../certificates/node.pem"
+      searchguard.ssl.transport.pemkey_filepath: "../certificates/node.key"
+      # TODO
+      searchguard.ssl.transport.pemkey_password: "TODO"
+      searchguard.ssl.transport.pemtrustedcas_filepath: "../certificates/root-ca.pem"
+      searchguard.ssl.transport.enforce_hostname_verification: "false"
+      searchguard.ssl.transport.resolve_hostname: "false"
+      searchguard.ssl.http.enabled: "true"
+      searchguard.ssl.http.pemcert_filepath: "../certificates/node.pem"
+      searchguard.ssl.http.pemkey_filepath: "../certificates/node.key"
+      # TODO
+      searchguard.ssl.http.pemkey_password: "TODO"
+      searchguard.ssl.http.pemtrustedcas_filepath: "../certificates/root-ca.pem"
+      searchguard.enterprise_modules_enabled: "false"
+      ROOT_CA: "../certificates/root-ca.pem"
+      ADMIN_PEM: "../certificates/admin.pem"
+      ADMIN_KEY: "../certificates/admin.key"
+      # TODO
+      ADMIN_KEY_PASS: "TODO"
+      ELASTIC_PWD: "elastic"
+      KIBANA_PWD: "kibana"
+      BEATS_PWD: "beats"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+    - "9201:9200"
+#    - "9300:9300"
+    restart: always
+    networks:
+    - esnet
+networks:
+  esnet:

@@ -21,7 +21,6 @@ COPY --chown=elasticsearch:0 ./src/main/resources/bin /usr/local/bin
 
 RUN echo "===> Installing search-guard..." \
     && chmod -R +x /usr/local/bin \
-    && ping -c 2 heise.de \
     && elasticsearch-plugin install -b "com.floragunn:search-guard-6:$ES_VERSION-$SG_VERSION"
 
 ENTRYPOINT ["/usr/local/bin/searchguard-entrypoint.sh"]
