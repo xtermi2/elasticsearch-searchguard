@@ -1,0 +1,23 @@
+admin:
+  backendroles:
+  - admin
+  hosts:
+  - "*"
+  users:
+  - elastic
+
+kibana_user:
+  backendroles:
+  - kibana_user
+  hosts:
+  - "*"
+  users:
+  - kibana
+
+beats_user:
+  backendroles:
+  - beats_user
+  hosts:
+  - "*"
+  users:
+  - beats

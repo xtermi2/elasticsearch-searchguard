@@ -1,0 +1,14 @@
+elastic:
+  hash: changeme #elastic
+  roles:
+  - admin
+
+kibana:
+  hash: changeme #kibana
+  roles:
+  - kibana_user
+
+beats:
+  hash: changeme #beats
+  roles:
+  - beats_user
