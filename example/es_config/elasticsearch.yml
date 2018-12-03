@@ -9,6 +9,6 @@ discovery.zen.minimum_master_nodes: 1
 searchguard:
   # lists can't be set via environment variables. so this is the only reason why we have a custom elasticsearch.yml here
   nodes_dn:
-  - CN=node.es.vss.local,OU=Ops,O=VSS,DC=vss,DC=local
+  - CN=node.es.local,OU=Ops,O=test,DC=es,DC=local
   authcz.admin_dn:
-  - CN=admin.es.vss.local,OU=Ops,O=VSS,DC=vss,DC=local
+  - CN=admin.es.local,OU=Ops,O=test,DC=es,DC=local

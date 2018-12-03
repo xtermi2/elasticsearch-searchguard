@@ -1,2 +1,9 @@
 *.iml
+.idea
 *.pem
+*.key
+example/search-guard-tlstool.zip
+example/config
+example/tools
+example/deps
+example/out

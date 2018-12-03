@@ -16,35 +16,35 @@ services:
       ES_JAVA_OPTS: "-Xms500m -Xmx500m"
       searchguard.ssl.transport.enabled: "true"
       searchguard.ssl.transport.enable_openssl_if_available: "true"
-      searchguard.ssl.transport.pemcert_filepath: "../certificates/node.pem"
-      searchguard.ssl.transport.pemkey_filepath: "../certificates/node.key"
-      # TODO
-      searchguard.ssl.transport.pemkey_password: "TODO"
-      searchguard.ssl.transport.pemtrustedcas_filepath: "../certificates/root-ca.pem"
+      searchguard.ssl.transport.pemcert_filepath: "certificates/node.pem"
+      searchguard.ssl.transport.pemkey_filepath: "certificates/node.key"
+      searchguard.ssl.transport.pemkey_password: "default-secret"
+      searchguard.ssl.transport.pemtrustedcas_filepath: "certificates/root-ca.pem"
       searchguard.ssl.transport.enforce_hostname_verification: "false"
       searchguard.ssl.transport.resolve_hostname: "false"
       searchguard.ssl.http.enabled: "true"
-      searchguard.ssl.http.pemcert_filepath: "../certificates/node.pem"
-      searchguard.ssl.http.pemkey_filepath: "../certificates/node.key"
-      # TODO
-      searchguard.ssl.http.pemkey_password: "TODO"
-      searchguard.ssl.http.pemtrustedcas_filepath: "../certificates/root-ca.pem"
+      searchguard.ssl.http.pemcert_filepath: "certificates/node.pem"
+      searchguard.ssl.http.pemkey_filepath: "certificates/node.key"
+      searchguard.ssl.http.pemkey_password: "default-secret"
+      searchguard.ssl.http.pemtrustedcas_filepath: "certificates/root-ca.pem"
       searchguard.enterprise_modules_enabled: "false"
-      ROOT_CA: "../certificates/root-ca.pem"
-      ADMIN_PEM: "../certificates/admin.pem"
-      ADMIN_KEY: "../certificates/admin.key"
-      # TODO
-      ADMIN_KEY_PASS: "TODO"
+      ROOT_CA: "root-ca.pem"
+      ADMIN_PEM: "admin.pem"
+      ADMIN_KEY: "admin.key"
+      ADMIN_KEY_PASS: "default-secret"
       ELASTIC_PWD: "elastic"
       KIBANA_PWD: "kibana"
       BEATS_PWD: "beats"
+    volumes:
+    - ./es_config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    - ./out:/usr/share/elasticsearch/config/certificates
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
     - "9200:9200"
-#    - "9300:9300"
+    #    - "9300:9300"
     restart: always
     networks:
     - esnet
@@ -63,35 +63,35 @@ services:
       ES_JAVA_OPTS: "-Xms500m -Xmx500m"
       searchguard.ssl.transport.enabled: "true"
       searchguard.ssl.transport.enable_openssl_if_available: "true"
-      searchguard.ssl.transport.pemcert_filepath: "../certificates/node.pem"
-      searchguard.ssl.transport.pemkey_filepath: "../certificates/node.key"
-      # TODO
-      searchguard.ssl.transport.pemkey_password: "TODO"
-      searchguard.ssl.transport.pemtrustedcas_filepath: "../certificates/root-ca.pem"
+      searchguard.ssl.transport.pemcert_filepath: "certificates/node.pem"
+      searchguard.ssl.transport.pemkey_filepath: "certificates/node.key"
+      searchguard.ssl.transport.pemkey_password: "default-secret"
+      searchguard.ssl.transport.pemtrustedcas_filepath: "certificates/root-ca.pem"
       searchguard.ssl.transport.enforce_hostname_verification: "false"
       searchguard.ssl.transport.resolve_hostname: "false"
       searchguard.ssl.http.enabled: "true"
-      searchguard.ssl.http.pemcert_filepath: "../certificates/node.pem"
-      searchguard.ssl.http.pemkey_filepath: "../certificates/node.key"
-      # TODO
-      searchguard.ssl.http.pemkey_password: "TODO"
-      searchguard.ssl.http.pemtrustedcas_filepath: "../certificates/root-ca.pem"
+      searchguard.ssl.http.pemcert_filepath: "certificates/node.pem"
+      searchguard.ssl.http.pemkey_filepath: "certificates/node.key"
+      searchguard.ssl.http.pemkey_password: "default-secret"
+      searchguard.ssl.http.pemtrustedcas_filepath: "certificates/root-ca.pem"
       searchguard.enterprise_modules_enabled: "false"
-      ROOT_CA: "../certificates/root-ca.pem"
-      ADMIN_PEM: "../certificates/admin.pem"
-      ADMIN_KEY: "../certificates/admin.key"
-      # TODO
-      ADMIN_KEY_PASS: "TODO"
+      ROOT_CA: "root-ca.pem"
+      ADMIN_PEM: "admin.pem"
+      ADMIN_KEY: "admin.key"
+      ADMIN_KEY_PASS: "default-secret"
       ELASTIC_PWD: "elastic"
       KIBANA_PWD: "kibana"
       BEATS_PWD: "beats"
+    volumes:
+    - ./es_config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    - ./out:/usr/share/elasticsearch/config/certificates
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
     - "9201:9200"
-#    - "9300:9300"
+    #    - "9300:9300"
     restart: always
     networks:
     - esnet

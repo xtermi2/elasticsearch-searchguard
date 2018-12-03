@@ -11,7 +11,7 @@ ENV BEATS_PWD "changeme"
 ENV ADMIN_KEY_PASS "changeme"
 
 ENV SG_CONFIG_DIR "/usr/share/elasticsearch/sg_config"
-ENV SG_CERT_DIR "/usr/share/elasticsearch/certificates"
+ENV SG_CERT_DIR "/usr/share/elasticsearch/config/certificates"
 
 RUN mkdir -p $SG_CONFIG_DIR $SG_CERT_DIR \
     && chmod -R 0775 $SG_CONFIG_DIR $SG_CERT_DIR
