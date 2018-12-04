@@ -1,5 +1,5 @@
 # elasticsearch-searchguard
-Elasticsearch with integrated search guard plugin.
+Elasticsearch OSS with integrated search guard plugin.
 Have a look at [xtermi2/kibana-searchguard](https://github.com/xtermi2/kibana-searchguard) 
 for a fitting kibana.
 
