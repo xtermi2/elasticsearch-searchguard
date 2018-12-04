@@ -3,8 +3,9 @@ FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.3
 
 LABEL description="elasticsearch secured with search-guard"
 
-ENV ES_VERSION "6.2.3"
-ENV SG_VERSION "23.1"
+ENV ES_VERSION "6.5.1"
+ENV SG_VERSION "23.2"
+
 ENV ELASTIC_PWD "changeme"
 ENV KIBANA_PWD "changeme"
 ENV BEATS_PWD "changeme"
