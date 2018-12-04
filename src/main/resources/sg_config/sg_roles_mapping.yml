@@ -9,6 +9,8 @@ admin:
 kibana_user:
   backendroles:
   - kibana_user
+  - sg_kibana_server
+  - read_only
   hosts:
   - "*"
   users:
