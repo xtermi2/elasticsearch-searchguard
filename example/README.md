@@ -36,6 +36,6 @@ Here is described how to generate self signed certificates with the search-guard
     curl -k -u 'elastic:elastic' -X PUT https://localhost:9200/myindex/_doc/1 -H 'Content-Type: application/json' -d '{"user" : "kimchy", "post_date" : "2009-11-15T14:12:12", "message" : "trying out Elasticsearch"}'
     ```  
 5. try it out with kibana and login with kibana:kibana
-    - https://localhost:5601  
+    - http://localhost:5601  
         - Add the previously created index "myindex" to kibana via **Management** -> **Index Patterns**.
         - Now you are able to explore your elasticsearch index via kibana in the **Discover** view.
