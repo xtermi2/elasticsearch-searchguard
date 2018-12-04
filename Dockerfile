@@ -1,5 +1,5 @@
 # Instructions to build this image
-FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.3
+FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.5.1
 
 LABEL description="elasticsearch secured with search-guard"
 
