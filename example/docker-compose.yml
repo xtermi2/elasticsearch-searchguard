@@ -95,5 +95,23 @@ services:
     restart: always
     networks:
     - esnet
+  kibana:
+    image: xtermi2/kibana-searchguard
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: "https://elasticsearch_searchguard_1:9200"
+      ELASTICSEARCH_SSL_VERIFICATIONMODE: "none"
+      ELASTICSEARCH_USERNAME: "kibana"
+      ELASTICSEARCH_PASSWORD: "kibana"
+      SEARCHGUARD_COOKIE_TTL: "168"
+      SEARCHGUARD_SESSION_TTL: "168"
+    ports:
+    - "5601:5601"
+    restart: always
+    depends_on:
+    - "elasticsearch_searchguard_1"
+    - "elasticsearch_searchguard_2"
+    networks:
+    - esnet
 networks:
   esnet:
