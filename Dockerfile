@@ -1,7 +1,12 @@
 # Instructions to build this image
 FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.5.1
 
-LABEL description="elasticsearch secured with search-guard"
+LABEL description = "elasticsearch secured with search-guard"
+LABEL org.label-schema.name = "elasticsearch-searchguard"
+LABEL org.label-schema.description = "elasticsearch secured with search-guard"
+LABEL org.label-schema.usage = "https://github.com/xtermi2/elasticsearch-searchguard/tree/master/example"
+LABEL org.label-schema.url = "https://github.com/xtermi2/elasticsearch-searchguard"
+LABEL org.label-schema.vcs-url = "https://github.com/xtermi2/elasticsearch-searchguard"
 
 ENV ES_VERSION "6.5.1"
 ENV SG_VERSION "23.2"
