@@ -23,6 +23,9 @@ ENV ADMIN_KEY_PASS "changeme"
 
 ENV SG_CONFIG_DIR "/usr/share/elasticsearch/sg_config"
 ENV SG_CERT_DIR "/usr/share/elasticsearch/config/certificates"
+ENV ROOT_CA "root-ca.pem"
+ENV ADMIN_PEM "admin.pem"
+ENV ADMIN_KEY "admin.key"
 
 RUN mkdir -p $SG_CONFIG_DIR $SG_CERT_DIR \
     && chmod -R 0775 $SG_CONFIG_DIR $SG_CERT_DIR
