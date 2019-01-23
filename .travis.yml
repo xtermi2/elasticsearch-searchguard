@@ -1,13 +1,13 @@
 language: bash
 sudo: required
+
+env:
+  - IMAGE_NAME=xtermi2/elasticsearch-searchguard
+
 services:
   - docker
 
-before_script:
-  - echo "TRAVIS_COMMIT=$TRAVIS_COMMIT"
-  - echo "build timestamp=`date --iso-8601=seconds`"
-  - echo "git vcs-ref=`git rev-parse --short=7 HEAD`"
 script:
-  - docker build --build-arg VCS_REF=$TRAVIS_COMMIT --build-arg BUILD_DATE=`date --iso-8601=seconds` -t xtermi2/elasticsearch-searchguard .
+  - docker build --build-arg VCS_REF=$TRAVIS_COMMIT --build-arg BUILD_DATE=`date --iso-8601=seconds` -t $IMAGE_NAME .
 after_script:
-  - docker inspect xtermi2/elasticsearch-searchguard
+  - docker inspect $IMAGE_NAME
