@@ -2,6 +2,7 @@
 [![](https://images.microbadger.com/badges/version/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
 [![](https://images.microbadger.com/badges/image/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
 [![](https://images.microbadger.com/badges/commit/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
+[![Build Status](https://travis-ci.org/xtermi2/elasticsearch-searchguard.svg?branch=master)](https://travis-ci.org/xtermi2/elasticsearch-searchguard)
 
 Have a look at [xtermi2/kibana-searchguard](https://github.com/xtermi2/kibana-searchguard) for a fitting kibana.
 
