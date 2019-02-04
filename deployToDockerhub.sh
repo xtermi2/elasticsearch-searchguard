@@ -52,7 +52,7 @@ echo "login to docker hub..."
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 
-DOCKER_TAGS=`get_docker_tags "${GIT_TAG}"`
+DOCKER_TAGS=$(get_docker_tags "${GIT_TAG}")
 echo "Docker tags='$DOCKER_TAGS'"
 
 export IFS="${DOCKER_TAG_SEPARATOR}"
