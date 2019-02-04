@@ -32,22 +32,23 @@ Here is described how to generate self signed certificates with the search-guard
 1.  set required kernel flags (<https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html>)
     -   `sudo sysctl -w vm.max_map_count=262144`
         -   this setting is only temporary, to set this permanently add the parameter in `/etc/sysctl.conf`
-        
+
 2.  start docker-compose
     -   `docker-compose up`   
-    
+
 3.  test if elasticsearch cluster is up and running: 
+
     -   `curl -k -u 'elastic:elastic' https://localhost:9200/_cluster/health?pretty`
         -   you should see **status: green** and **number_of_nodes: 2**.
-        
+
     -   `curl -k -u 'elastic:elastic' https://localhost:9200/_searchguard/license?pretty`
         -   here you can also see some cluster information + searchguard license information.
-        
+
 4.  put a document to elasticsearch  
     ```bash
     curl -k -u 'elastic:elastic' -X PUT https://localhost:9200/myindex/_doc/1 -H 'Content-Type: application/json' -d '{"user" : "kimchy", "post_date" : "2009-11-15T14:12:12", "message" : "trying out Elasticsearch"}'
     ```
-    
+
 5.  try it out with kibana and login with kibana:kibana
     -   <http://localhost:5601>  
         -   Add the previously created index "myindex" to kibana via **Management** -> **Index Patterns**.
