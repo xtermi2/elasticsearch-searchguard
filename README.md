@@ -1,4 +1,5 @@
 # Elasticsearch OSS Docker Image with integrated search guard plugin.
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b2a9a55db2b245c4b0e69e21b9e196b6)](https://app.codacy.com/app/xtermi2/elasticsearch-searchguard?utm_source=github.com&utm_medium=referral&utm_content=xtermi2/elasticsearch-searchguard&utm_campaign=Badge_Grade_Dashboard)
 [![](https://images.microbadger.com/badges/version/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
 [![](https://images.microbadger.com/badges/image/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
 [![](https://images.microbadger.com/badges/commit/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
