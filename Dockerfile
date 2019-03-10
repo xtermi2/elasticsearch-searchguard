@@ -15,6 +15,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE
 
 ENV ES_VERSION "6.6.1"
 ENV SG_VERSION "24.1"
+ENV PROMETHEUS_EXPORTER_VERSION "6.6.1.0"
 
 ENV ELASTIC_PWD "changeme"
 ENV KIBANA_PWD "changeme"
@@ -35,7 +36,9 @@ COPY --chown=elasticsearch:0 ./src/main/resources/bin /usr/local/bin
 
 RUN echo "===> Installing search-guard..." \
     && chmod -R +x /usr/local/bin \
-    && elasticsearch-plugin install -b "com.floragunn:search-guard-6:$ES_VERSION-$SG_VERSION"
+    && elasticsearch-plugin install -b "com.floragunn:search-guard-6:$ES_VERSION-$SG_VERSION" \
+    && echo "===> Installing elasticsearch-prometheus-exporter..." \
+    && elasticsearch-plugin install -b https://distfiles.compuscene.net/elasticsearch/elasticsearch-prometheus-exporter-${PROMETHEUS_EXPORTER_VERSION}.zip
 
 ENTRYPOINT ["/usr/local/bin/searchguard-entrypoint.sh"]
 # Dummy overridable parameter parsed by entrypoint
