@@ -60,4 +60,4 @@ Here is described how to generate self signed certificates with the search-guard
     -   with prometheus <http://localhost:9090/targets> to see all prometheus targets
     
     -   with grafana <http://localhost:3000> and login with `admin:admin`
-        -   There exists a provisioned dashboard called "ElasticSearch" from https://grafana.com/dashboards/266
+        -   There exists a provisioned dashboard called "ElasticSearch" from <https://grafana.com/dashboards/266>
