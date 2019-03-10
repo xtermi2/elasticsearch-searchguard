@@ -1,4 +1,4 @@
-# Elasticsearch OSS Docker Image with integrated search guard plugin
+# [Elasticsearch](https://www.elastic.co/products/elasticsearch) [OSS Docker Image](https://www.docker.elastic.co/) with integrated [search guard](https://search-guard.com) and [elasticsearch-prometheus-exporter](https://github.com/vvanholl/elasticsearch-prometheus-exporter) plugin
 
 [![](https://images.microbadger.com/badges/version/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
 [![](https://images.microbadger.com/badges/image/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
@@ -8,11 +8,11 @@
 
 Have a look at [xtermi2/kibana-searchguard](https://github.com/xtermi2/kibana-searchguard) for a fitting kibana.
 
-For a complete example with 2 elasticsearch nodes and a kibana have a look at [xtermi2/elasticsearch-searchguard/example/README.md](https://github.com/xtermi2/elasticsearch-searchguard/tree/master/example)
+For a complete example with 2 elasticsearch nodes, [kibana](https://www.elastic.co/products/kibana), [prometheus](https://prometheus.io) and [grafana](https://grafana.com) have a look at [xtermi2/elasticsearch-searchguard/example/README.md](https://github.com/xtermi2/elasticsearch-searchguard/tree/master/example)
 
 ## Image detail description
 
-This image extends the original elastic OSS image and installs search-guard plugin. 
+This docker image extends the original elastic OSS image and installs [search guard](https://search-guard.com) and [elasticsearch-prometheus-exporter](https://github.com/vvanholl/elasticsearch-prometheus-exporter) plugin. 
 
 At startup search-guard is configured with 3 default users:
 

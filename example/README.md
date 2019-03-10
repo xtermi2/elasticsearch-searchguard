@@ -27,7 +27,7 @@ Here is described how to generate self signed certificates with the search-guard
     -   node: is a certificate for all nodes
     -   admin: is a certificate which is used to configure search guard
 
-## start elasticsearch with docker-compose
+## start elasticsearch, kibana, prometheus and grafana with docker-compose
 
 1.  set required kernel flags (<https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html>)
     -   `sudo sysctl -w vm.max_map_count=262144`
