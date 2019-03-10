@@ -36,18 +36,18 @@ services:
       KIBANA_PWD: "kibana"
       BEATS_PWD: "beats"
     volumes:
-    - ./es_config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    - ./out:/usr/share/elasticsearch/config/certificates
+      - ./es_config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./out:/usr/share/elasticsearch/config/certificates
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
-    - "9200:9200"
+      - "9200:9200"
     #    - "9300:9300"
     restart: always
     networks:
-    - esnet
+      - esnet
   elasticsearch_searchguard_2:
     image: xtermi2/elasticsearch-searchguard
     container_name: elasticsearch_searchguard_2
@@ -83,18 +83,18 @@ services:
       KIBANA_PWD: "kibana"
       BEATS_PWD: "beats"
     volumes:
-    - ./es_config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    - ./out:/usr/share/elasticsearch/config/certificates
+      - ./es_config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./out:/usr/share/elasticsearch/config/certificates
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
-    - "9201:9200"
+      - "9201:9200"
     #    - "9300:9300"
     restart: always
     networks:
-    - esnet
+      - esnet
   kibana:
     image: xtermi2/kibana-searchguard
     container_name: kibana
@@ -106,12 +106,39 @@ services:
       SEARCHGUARD_COOKIE_TTL: "168"
       SEARCHGUARD_SESSION_TTL: "168"
     ports:
-    - "5601:5601"
+      - "5601:5601"
     restart: always
     depends_on:
-    - "elasticsearch_searchguard_1"
-    - "elasticsearch_searchguard_2"
+      - "elasticsearch_searchguard_1"
+      - "elasticsearch_searchguard_2"
     networks:
-    - esnet
+      - esnet
+  prometheus:
+    image: prom/prometheus:v2.7.2
+    container_name: prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    restart: always
+    depends_on:
+      - "elasticsearch_searchguard_1"
+      - "elasticsearch_searchguard_2"
+    networks:
+      - esnet
+  grafana:
+    image: grafana/grafana:6.0.1
+    container_name: grafana
+    volumes:
+      - ./monitoring/grafana_provisioning_prometheus_datasource.yaml:/etc/grafana/provisioning/datasources/grafana_provisioning_prometheus_datasource.yaml
+      - ./monitoring/grafana_provisioning_elasticsearch_dashboard.yaml:/etc/grafana/provisioning/dashboards/grafana_provisioning_elasticsearch_dashboard.yaml
+      - ./monitoring/grafana_elasticsearchDashboard_266.json:/var/lib/grafana/dashboards/grafana_elasticsearchDashboard_266.json
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - "prometheus"
+    networks:
+      - esnet
 networks:
   esnet:

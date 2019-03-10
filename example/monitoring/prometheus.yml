@@ -1,0 +1,24 @@
+global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+scrape_configs:
+  - job_name: 'elasticsearch'
+    metrics_path: "/_prometheus/metrics"
+    scheme: https
+    basic_auth:
+      username: elastic
+      password: elastic
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+      - targets:
+          - elasticsearch_searchguard_1:9200
+          - elasticsearch_searchguard_2:9200
+  - job_name: 'prometheus'
+    static_configs:
+      - targets:
+          - localhost:9090
+  - job_name: 'grafana'
+    static_configs:
+      - targets:
+          - grafana:3000
