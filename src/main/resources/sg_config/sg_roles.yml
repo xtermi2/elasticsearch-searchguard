@@ -1,93 +1,114 @@
-admin:
-  cluster:
-  - ALL
-  indices:
-    "*":
-      "*":
-      - ALL
-
-# For users which use kibana, access to indices must be granted separately
+---
+_sg_meta:
+  type: "roles"
+  config_version: 2
+  
 kibana_user:
-  cluster:
-  - MONITOR
-  - CRUD
-  - INDICES_MONITOR
-  - CLUSTER_COMPOSITE_OPS
-  indices:
-    '?kibana':
-      '*':
-      - MANAGE
-      - INDEX
-      - READ
-      - DELETE
-    '?kibana-6':
-      '*':
-      - MANAGE
-      - INDEX
-      - READ
-      - DELETE
-    '?kibana_*':
-      '*':
-      - MANAGE
-      - INDEX
-      - READ
-      - DELETE
-    '?tasks':
-      '*':
-      - INDICES_ALL
-    '?management-beats':
-      '*':
-      - INDICES_ALL
-    '*':
-      '*':
-      - indices:data/read/field_caps*
-      - indices:admin/mappings/get*
-      - indices:admin/get
-
-# For the kibana server
-sg_kibana_server:
-  readonly: true
-  cluster:
-  - CLUSTER_MONITOR
-  - CLUSTER_COMPOSITE_OPS
-  - indices:admin/template*
-  - indices:data/read/scroll*
-  indices:
-    '?kibana':
-      '*':
-      - INDICES_ALL
-    '?kibana-6':
-      '*':
-      - INDICES_ALL
-    '?kibana_*':
-      '*':
-      - INDICES_ALL
-    '?reporting*':
-      '*':
-      - INDICES_ALL
-    '?monitoring*':
-      '*':
-      - INDICES_ALL
-    '?tasks':
-      '*':
-      - INDICES_ALL
-    '?management-beats*':
-      '*':
-      - INDICES_ALL
-    '*':
-      '*':
-      - "indices:admin/aliases*"
-
-beats_user:
-  cluster:
-  - ES_INPUT
-  indices:
-    "*beat-*":
-      "*":
-      - INDEX_OWNER
-
+  cluster_permissions:
+  - "MONITOR"
+  - "CRUD"
+  - "INDICES_MONITOR"
+  - "CLUSTER_COMPOSITE_OPS"
+  index_permissions:
+  - index_patterns:
+    - "?kibana"
+    allowed_actions:
+    - "READ"
+    - "DELETE"
+    - "MANAGE"
+    - "INDEX"
+  - index_patterns:
+    - "?kibana-6"
+    allowed_actions:
+    - "READ"
+    - "DELETE"
+    - "MANAGE"
+    - "INDEX"
+  - index_patterns:
+    - "?kibana_*"
+    allowed_actions:
+    - "READ"
+    - "DELETE"
+    - "MANAGE"
+    - "INDEX"
+  - index_patterns:
+    - "?tasks"
+    allowed_actions:
+    - "INDICES_ALL"
+  - index_patterns:
+    - "?management-beats"
+    allowed_actions:
+    - "INDICES_ALL"
+  - index_patterns:
+    - "*"
+    allowed_actions:
+    - "indices:admin/mappings/get*"
+    - "indices:admin/get"
+    - "indices:data/read/field_caps*"
+  
 read_only:
-  indices:
-    '*':
-      '*':
-      - READ
+  cluster_permissions: []
+  index_permissions:
+  - index_patterns:
+    - "*"
+    allowed_actions:
+    - "READ"
+  
+admin:
+  cluster_permissions:
+  - "ALL"
+  index_permissions:
+  - index_patterns:
+    - "*"
+    allowed_actions:
+    - "ALL"
+  
+beats_user:
+  cluster_permissions:
+  - "ES_INPUT"
+  index_permissions:
+  - index_patterns:
+    - "*beat-*"
+    allowed_actions:
+    - "INDEX_OWNER"
+  
+sg_kibana_server:
+  reserved: true
+  cluster_permissions:
+  - "CLUSTER_MONITOR"
+  - "CLUSTER_COMPOSITE_OPS"
+  - "indices:admin/template*"
+  - "indices:data/read/scroll*"
+  index_permissions:
+  - index_patterns:
+    - "?kibana"
+    allowed_actions:
+    - "INDICES_ALL"
+  - index_patterns:
+    - "?kibana-6"
+    allowed_actions:
+    - "INDICES_ALL"
+  - index_patterns:
+    - "?kibana_*"
+    allowed_actions:
+    - "INDICES_ALL"
+  - index_patterns:
+    - "?reporting*"
+    allowed_actions:
+    - "INDICES_ALL"
+  - index_patterns:
+    - "?monitoring*"
+    allowed_actions:
+    - "INDICES_ALL"
+  - index_patterns:
+    - "?tasks"
+    allowed_actions:
+    - "INDICES_ALL"
+  - index_patterns:
+    - "?management-beats*"
+    allowed_actions:
+    - "INDICES_ALL"
+  - index_patterns:
+    - "*"
+    allowed_actions:
+    - "indices:admin/aliases*"

@@ -1,25 +1,30 @@
-admin:
-  backendroles:
-  - admin
-  hosts:
-  - "*"
-  users:
-  - elastic
+---
+_sg_meta:
+  type: "rolesmapping"
+  config_version: 2
 
 kibana_user:
-  backendroles:
-  - kibana_user
-  - sg_kibana_server
-  - read_only
+  backend_roles:
+  - "kibana_user"
+  - "sg_kibana_server"
+  - "read_only"
   hosts:
   - "*"
   users:
-  - kibana
+  - "kibana"
+
+admin:
+  backend_roles:
+  - "admin"
+  hosts:
+  - "*"
+  users:
+  - "elastic"
 
 beats_user:
-  backendroles:
-  - beats_user
+  backend_roles:
+  - "beats_user"
   hosts:
   - "*"
   users:
-  - beats
+  - "beats"
