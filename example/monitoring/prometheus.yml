@@ -6,8 +6,8 @@ scrape_configs:
     metrics_path: "/_prometheus/metrics"
     scheme: https
     basic_auth:
-      username: elastic
-      password: elastic
+      username: kibana
+      password: kibana
     tls_config:
       insecure_skip_verify: true
     static_configs:
