@@ -3289,7 +3289,7 @@
       "30d"
     ]
   },
-  "timezone": "utc",
+  "timezone": "browser",
   "title": "ElasticSearch",
   "uid": "vtlquEjik",
   "version": 1
