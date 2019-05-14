@@ -38,7 +38,7 @@ RUN echo "===> Installing search-guard..." \
     && chmod -R +x /usr/local/bin \
     && elasticsearch-plugin install -b "com.floragunn:search-guard-6:$ES_VERSION-$SG_VERSION" \
     && echo "===> Installing elasticsearch-prometheus-exporter..." \
-    && elasticsearch-plugin install -b https://distfiles.compuscene.net/elasticsearch/elasticsearch-prometheus-exporter-${PROMETHEUS_EXPORTER_VERSION}.zip
+    && elasticsearch-plugin install -b https://github.com/vvanholl/elasticsearch-prometheus-exporter/releases/download/${PROMETHEUS_EXPORTER_VERSION}/prometheus-exporter-${PROMETHEUS_EXPORTER_VERSION}.zip
 
 ENTRYPOINT ["/usr/local/bin/searchguard-entrypoint.sh"]
 # Dummy overridable parameter parsed by entrypoint
