@@ -8,7 +8,7 @@ services:
   - docker
 
 script:
-  - docker build --build-arg VCS_REF=$TRAVIS_COMMIT --build-arg BUILD_DATE=`date --iso-8601=seconds` -t $IMAGE_NAME:latest .
+  - docker build --build-arg MICROSCANNER_TOKEN=$MICROSCANNER_TOKEN --build-arg VCS_REF=$TRAVIS_COMMIT --build-arg BUILD_DATE=`date --iso-8601=seconds` -t $IMAGE_NAME:latest --no-cache .
 after_script:
   - docker inspect $IMAGE_NAME
 
