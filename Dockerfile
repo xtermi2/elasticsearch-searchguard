@@ -14,7 +14,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE
 
 ENV ES_VERSION "7.2.0"
-ENV SG_VERSION "35.0.0"
+ENV SG_VERSION "37.0.0"
 ENV PROMETHEUS_EXPORTER_VERSION "7.2.0.0"
 
 ENV ELASTIC_PWD "changeme"
@@ -36,7 +36,7 @@ COPY --chown=elasticsearch:0 ./src/main/resources/bin /usr/local/bin
 
 RUN echo "===> Installing search-guard..." \
     && chmod -R +x /usr/local/bin \
-        && elasticsearch-plugin install -b "com.floragunn:search-guard-7:$ES_VERSION-$SG_VERSION" \
+    && elasticsearch-plugin install -b https://releases.floragunn.com/search-guard-7-$ES_VERSION-$SG_VERSION.zip \
     && echo "===> Installing elasticsearch-prometheus-exporter..." \
     && elasticsearch-plugin install -b https://github.com/vvanholl/elasticsearch-prometheus-exporter/releases/download/${PROMETHEUS_EXPORTER_VERSION}/prometheus-exporter-${PROMETHEUS_EXPORTER_VERSION}.zip
 

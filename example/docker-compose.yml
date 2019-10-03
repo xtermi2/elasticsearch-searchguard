@@ -114,7 +114,7 @@ services:
     networks:
       - esnet
   prometheus:
-    image: prom/prometheus:v2.11.1
+    image: prom/prometheus:v2.12.0
     container_name: prometheus
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -127,7 +127,7 @@ services:
     networks:
       - esnet
   grafana:
-    image: grafana/grafana:6.2.5
+    image: grafana/grafana:6.4.1
     container_name: grafana
     volumes:
       - ./monitoring/grafana_provisioning_prometheus_datasource.yaml:/etc/grafana/provisioning/datasources/grafana_provisioning_prometheus_datasource.yaml
