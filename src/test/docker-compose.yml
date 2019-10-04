@@ -1,0 +1,106 @@
+# docker compose to startup a local ES cluster
+version: '3.6'
+services:
+  elasticsearch_searchguard_1:
+    image: xtermi2/elasticsearch-searchguard
+    container_name: elasticsearch_searchguard_1
+    environment:
+      node.name: "elasticsearch_searchguard_1"
+      discovery.seed_hosts: elasticsearch_searchguard_2
+      cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
+      ES_JAVA_OPTS: "-Xms128m -Xmx128m"
+      ROOT_CA: "root-ca.pem"
+      ADMIN_PEM: "admin.pem"
+      ADMIN_KEY: "admin.key"
+      ADMIN_KEY_PASS: "default-secret"
+      ELASTIC_PWD: "elastic"
+      KIBANA_PWD: "kibana"
+      BEATS_PWD: "beats"
+    volumes:
+      - ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./test-certs:/usr/share/elasticsearch/config/certificates
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+    healthcheck:
+      test: curl -X GET -f -k -u 'elastic:elastic' https://localhost:9200 || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    networks:
+      - esnet
+  elasticsearch_searchguard_2:
+    image: xtermi2/elasticsearch-searchguard
+    container_name: elasticsearch_searchguard_2
+    environment:
+      node.name: "elasticsearch_searchguard_2"
+      discovery.seed_hosts: elasticsearch_searchguard_1
+      cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
+      ES_JAVA_OPTS: "-Xms128m -Xmx128m"
+      ROOT_CA: "root-ca.pem"
+      ADMIN_PEM: "admin.pem"
+      ADMIN_KEY: "admin.key"
+      ADMIN_KEY_PASS: "default-secret"
+      ELASTIC_PWD: "elastic"
+      KIBANA_PWD: "kibana"
+      BEATS_PWD: "beats"
+    volumes:
+      - ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./test-certs:/usr/share/elasticsearch/config/certificates
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9201:9200"
+    healthcheck:
+      test: curl -X GET -f -k -u 'elastic:elastic' https://localhost:9200 || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    networks:
+      - esnet
+  kibana:
+    image: xtermi2/kibana-searchguard:7.3.0
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_HOSTS: "https://elasticsearch_searchguard_1:9200"
+      ELASTICSEARCH_SSL_VERIFICATIONMODE: "none"
+      ELASTICSEARCH_USERNAME: "kibana"
+      ELASTICSEARCH_PASSWORD: "kibana"
+    ports:
+      - "5601:5601"
+    depends_on:
+      - "elasticsearch_searchguard_1"
+      - "elasticsearch_searchguard_2"
+    healthcheck:
+      test: curl -X GET -f http://localhost:5601/status || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    networks:
+      - esnet
+  filebeat:
+    image: docker.elastic.co/beats/filebeat-oss:7.3.0
+    container_name: filebeat
+    # to overwrite the -e that disables logging to file and disable strict permission checks for filebeat.yml!
+    command: -c filebeat.yml -strict.perms=false
+    volumes:
+      - ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml
+    ports:
+      - "5066:5066"
+    healthcheck:
+      test: curl -X GET -f http://localhost:5066 || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      - elasticsearch_searchguard_1
+      - elasticsearch_searchguard_2
+    networks:
+      - esnet
+networks:
+  esnet:
