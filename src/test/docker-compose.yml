@@ -8,7 +8,7 @@ services:
       node.name: "elasticsearch_searchguard_1"
       discovery.seed_hosts: elasticsearch_searchguard_2
       cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
-      ES_JAVA_OPTS: "-Xms128m -Xmx128m"
+      ES_JAVA_OPTS: "-Xms192m -Xmx192m"
       ROOT_CA: "root-ca.pem"
       ADMIN_PEM: "admin.pem"
       ADMIN_KEY: "admin.key"
@@ -29,7 +29,7 @@ services:
       test: curl -X GET -f -k -u 'elastic:elastic' https://localhost:9200 || exit 1
       interval: 30s
       timeout: 5s
-      retries: 5
+      retries: 10
     networks:
       - esnet
   elasticsearch_searchguard_2:
@@ -39,7 +39,7 @@ services:
       node.name: "elasticsearch_searchguard_2"
       discovery.seed_hosts: elasticsearch_searchguard_1
       cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
-      ES_JAVA_OPTS: "-Xms128m -Xmx128m"
+      ES_JAVA_OPTS: "-Xms192m -Xmx192m"
       ROOT_CA: "root-ca.pem"
       ADMIN_PEM: "admin.pem"
       ADMIN_KEY: "admin.key"
@@ -60,7 +60,7 @@ services:
       test: curl -X GET -f -k -u 'elastic:elastic' https://localhost:9200 || exit 1
       interval: 30s
       timeout: 5s
-      retries: 5
+      retries: 10
     networks:
       - esnet
   kibana:
@@ -80,7 +80,7 @@ services:
       test: curl -X GET -f http://localhost:5601/status || exit 1
       interval: 30s
       timeout: 5s
-      retries: 5
+      retries: 10
     networks:
       - esnet
   filebeat:
@@ -96,7 +96,7 @@ services:
       test: curl -X GET -f http://localhost:5066 || exit 1
       interval: 30s
       timeout: 5s
-      retries: 5
+      retries: 10
     depends_on:
       - elasticsearch_searchguard_1
       - elasticsearch_searchguard_2
