@@ -3,9 +3,6 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 cd $DIR
 
-chmod 777 test-certs
-chmod -R 666 test-certs/*
-chgrp -R 1000 test-certs
 ls -l
 ls -l test-certs
 
