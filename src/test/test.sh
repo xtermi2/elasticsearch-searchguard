@@ -5,12 +5,17 @@ cd $DIR
 
 chmod 777 test-certs
 chmod -R 666 test-certs/*
+chgrp -R 1000 test-certs
+ls -l
+ls -l test-certs
 
 echo "stating docker-compose"
 docker-compose up -d
 
 docker-compose ps
 docker-compose logs elasticsearch_searchguard_1
+docker exec -i -t elasticsearch_searchguard_1 /bin/ls -l /usr/share/elasticsearch/config
+docker exec -i -t elasticsearch_searchguard_1 /bin/ls -l /usr/share/elasticsearch/config/certificates
 
 ./wait_until_started.sh
 docker-compose ps
