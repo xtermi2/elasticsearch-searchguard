@@ -8,7 +8,7 @@ services:
       node.name: "elasticsearch_searchguard_1"
       discovery.seed_hosts: elasticsearch_searchguard_2
       cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
-      ES_JAVA_OPTS: "-Xms192m -Xmx192m"
+      ES_JAVA_OPTS: "-Xms128m -Xmx128m"
       ROOT_CA: "root-ca.pem"
       ADMIN_PEM: "admin.pem"
       ADMIN_KEY: "admin.key"
@@ -39,7 +39,7 @@ services:
       node.name: "elasticsearch_searchguard_2"
       discovery.seed_hosts: elasticsearch_searchguard_1
       cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
-      ES_JAVA_OPTS: "-Xms192m -Xmx192m"
+      ES_JAVA_OPTS: "-Xms128m -Xmx128m"
       ROOT_CA: "root-ca.pem"
       ADMIN_PEM: "admin.pem"
       ADMIN_KEY: "admin.key"

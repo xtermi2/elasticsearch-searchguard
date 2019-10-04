@@ -6,8 +6,12 @@ cd $DIR
 echo "stating docker-compose"
 docker-compose up -d
 
+docker-compose ps
+docker-compose logs elasticsearch_searchguard_1
+
 ./wait_until_started.sh
 docker-compose ps
+docker-compose logs elasticsearch_searchguard_1
 
 general_status=0
 echo "executing testcases"
