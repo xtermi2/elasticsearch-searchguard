@@ -5,7 +5,7 @@ general_status=0
 echo -n "TEST if kibana status endpoint is returning HTTP 200..."
 RET=1
 count=0
-while ((RET != 0 && count < 90)); do
+while ((RET != 0 && count < 120)); do
   sleep 1
   curl -X GET --silent -f "http://localhost:5601/status" >/dev/null 2>&1
   RET=$?

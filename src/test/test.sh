@@ -3,20 +3,11 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 cd $DIR
 
-ls -l
-ls -l test-certs
-
 echo "stating docker-compose"
 docker-compose up -d
 
-docker-compose ps
-docker-compose logs elasticsearch_searchguard_1
-docker exec -i -t elasticsearch_searchguard_1 /bin/ls -l /usr/share/elasticsearch/config
-docker exec -i -t elasticsearch_searchguard_1 /bin/ls -l /usr/share/elasticsearch/config/certificates
-
 ./wait_until_started.sh
 docker-compose ps
-docker-compose logs elasticsearch_searchguard_1
 
 general_status=0
 echo "executing testcases"
