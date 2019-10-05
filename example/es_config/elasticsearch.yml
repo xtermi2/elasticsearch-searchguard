@@ -1,11 +1,27 @@
-cluster.name: "docker-cluster"
+cluster.name: "my-cluster"
 network.host: 0.0.0.0
+network.bind_host: "0.0.0.0"
+bootstrap.memory_lock: "true"
 
 # minimum_master_nodes need to be explicitly set when bound on a public IP
 # set to 1 to allow single node clusters
 # Details: https://github.com/elastic/elasticsearch/pull/17288
 discovery.zen.minimum_master_nodes: 1
 
+searchguard.ssl.transport.enabled: "true"
+searchguard.ssl.transport.enable_openssl_if_available: "true"
+searchguard.ssl.transport.pemcert_filepath: "certificates/node.pem"
+searchguard.ssl.transport.pemkey_filepath: "certificates/node.key"
+searchguard.ssl.transport.pemkey_password: "default-secret"
+searchguard.ssl.transport.pemtrustedcas_filepath: "certificates/root-ca.pem"
+searchguard.ssl.transport.enforce_hostname_verification: "false"
+searchguard.ssl.transport.resolve_hostname: "false"
+searchguard.ssl.http.enabled: "true"
+searchguard.ssl.http.pemcert_filepath: "certificates/node.pem"
+searchguard.ssl.http.pemkey_filepath: "certificates/node.key"
+searchguard.ssl.http.pemkey_password: "default-secret"
+searchguard.ssl.http.pemtrustedcas_filepath: "certificates/root-ca.pem"
+searchguard.enterprise_modules_enabled: "false"
 searchguard:
   # lists can't be set via environment variables. so this is the only reason why we have a custom elasticsearch.yml here
   nodes_dn:

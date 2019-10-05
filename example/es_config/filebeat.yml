@@ -1,0 +1,45 @@
+filebeat.inputs:
+  - type: log
+    paths:
+      - /usr/share/filebeat/logs/*
+    json:
+      keys_under_root: true
+    scan_frequency: 1s
+output:
+  elasticsearch:
+    hosts: https://elasticsearch_searchguard_1:9200
+    username: beats
+    password: beats
+    ssl.verification_mode: none
+    bulk_max_size: 1
+    backoff:
+      init: 1s
+      max: 1s
+    timeout: 2s
+  console.enabled: false
+
+setup:
+  kibana:
+    host: http://kibana:5601
+    username: kibana
+    password: kibana
+  ilm:
+    enabled: false
+
+logging:
+  json: true
+  level: info
+  to_files: true
+
+# for the healthcheck in docker-compose
+http:
+  enabled: true
+  host: 0.0.0.0
+  port: 5066
+
+monitoring.enabled: false
+xpack.security.enabled: false
+xpack.monitoring.enabled: false
+xpack.graph.enabled: false
+xpack.watcher.enabled: false
+xpack.reporting.enabled: false

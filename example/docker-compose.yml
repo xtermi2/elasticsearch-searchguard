@@ -1,34 +1,14 @@
 # docker compose to startup a local ES cluster
-version: '2.2'
+version: '3.6'
 services:
   elasticsearch_searchguard_1:
     image: xtermi2/elasticsearch-searchguard
     container_name: elasticsearch_searchguard_1
     environment:
       node.name: "elasticsearch_searchguard_1"
-      cluster.name: "my-cluster"
-      discovery.zen.ping.unicast.hosts: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
+      discovery.seed_hosts: elasticsearch_searchguard_2
       cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
-      number_of_replicas: "1"
-      auto_expand_replicas: "0-all"
-      network.host: "0.0.0.0"
-      network.bind_host: "0.0.0.0"
-      bootstrap.memory_lock: "true"
-      ES_JAVA_OPTS: "-Xms500m -Xmx500m"
-      searchguard.ssl.transport.enabled: "true"
-      searchguard.ssl.transport.enable_openssl_if_available: "true"
-      searchguard.ssl.transport.pemcert_filepath: "certificates/node.pem"
-      searchguard.ssl.transport.pemkey_filepath: "certificates/node.key"
-      searchguard.ssl.transport.pemkey_password: "default-secret"
-      searchguard.ssl.transport.pemtrustedcas_filepath: "certificates/root-ca.pem"
-      searchguard.ssl.transport.enforce_hostname_verification: "false"
-      searchguard.ssl.transport.resolve_hostname: "false"
-      searchguard.ssl.http.enabled: "true"
-      searchguard.ssl.http.pemcert_filepath: "certificates/node.pem"
-      searchguard.ssl.http.pemkey_filepath: "certificates/node.key"
-      searchguard.ssl.http.pemkey_password: "default-secret"
-      searchguard.ssl.http.pemtrustedcas_filepath: "certificates/root-ca.pem"
-      searchguard.enterprise_modules_enabled: "false"
+      ES_JAVA_OPTS: "-Xms256m -Xmx256m"
       ROOT_CA: "root-ca.pem"
       ADMIN_PEM: "admin.pem"
       ADMIN_KEY: "admin.key"
@@ -45,8 +25,12 @@ services:
         hard: -1
     ports:
       - "9200:9200"
-    #    - "9300:9300"
     restart: always
+    healthcheck:
+      test: curl -X GET -f -k -u 'elastic:elastic' https://localhost:9200 || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 10
     networks:
       - esnet
   elasticsearch_searchguard_2:
@@ -54,29 +38,9 @@ services:
     container_name: elasticsearch_searchguard_2
     environment:
       node.name: "elasticsearch_searchguard_2"
-      cluster.name: "my-cluster"
-      discovery.zen.ping.unicast.hosts: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
+      discovery.seed_hosts: elasticsearch_searchguard_1
       cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
-      number_of_replicas: "1"
-      auto_expand_replicas: "0-all"
-      network.host: "0.0.0.0"
-      network.bind_host: "0.0.0.0"
-      bootstrap.memory_lock: "true"
-      ES_JAVA_OPTS: "-Xms500m -Xmx500m"
-      searchguard.ssl.transport.enabled: "true"
-      searchguard.ssl.transport.enable_openssl_if_available: "true"
-      searchguard.ssl.transport.pemcert_filepath: "certificates/node.pem"
-      searchguard.ssl.transport.pemkey_filepath: "certificates/node.key"
-      searchguard.ssl.transport.pemkey_password: "default-secret"
-      searchguard.ssl.transport.pemtrustedcas_filepath: "certificates/root-ca.pem"
-      searchguard.ssl.transport.enforce_hostname_verification: "false"
-      searchguard.ssl.transport.resolve_hostname: "false"
-      searchguard.ssl.http.enabled: "true"
-      searchguard.ssl.http.pemcert_filepath: "certificates/node.pem"
-      searchguard.ssl.http.pemkey_filepath: "certificates/node.key"
-      searchguard.ssl.http.pemkey_password: "default-secret"
-      searchguard.ssl.http.pemtrustedcas_filepath: "certificates/root-ca.pem"
-      searchguard.enterprise_modules_enabled: "false"
+      ES_JAVA_OPTS: "-Xms256m -Xmx256m"
       ROOT_CA: "root-ca.pem"
       ADMIN_PEM: "admin.pem"
       ADMIN_KEY: "admin.key"
@@ -93,12 +57,16 @@ services:
         hard: -1
     ports:
       - "9201:9200"
-    #    - "9300:9300"
     restart: always
+    healthcheck:
+      test: curl -X GET -f -k -u 'elastic:elastic' https://localhost:9200 || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 10
     networks:
       - esnet
   kibana:
-    image: xtermi2/kibana-searchguard
+    image: xtermi2/kibana-searchguard:7.3.1
     container_name: kibana
     environment:
       ELASTICSEARCH_HOSTS: "https://elasticsearch_searchguard_1:9200"
@@ -108,19 +76,48 @@ services:
     ports:
       - "5601:5601"
     restart: always
+    healthcheck:
+      test: curl -X GET -f http://localhost:5601/status || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 10
     depends_on:
       - "elasticsearch_searchguard_1"
       - "elasticsearch_searchguard_2"
     networks:
       - esnet
+  filebeat:
+    image: docker.elastic.co/beats/filebeat-oss:7.3.1
+    container_name: filebeat
+    # to overwrite the -e that disables logging to file and disable strict permission checks for filebeat.yml!
+    command: -c filebeat.yml -strict.perms=false
+    volumes:
+      - ./es_config/filebeat.yml:/usr/share/filebeat/filebeat.yml
+    ports:
+      - "5066:5066"
+    healthcheck:
+      test: curl -X GET -f http://localhost:5066 || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      - elasticsearch_searchguard_1
+      - elasticsearch_searchguard_2
+    networks:
+      - esnet
   prometheus:
-    image: prom/prometheus:v2.12.0
+    image: prom/prometheus:v2.13.0
     container_name: prometheus
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
     restart: always
+    healthcheck:
+      test: wget --quiet --tries=1 --spider http://localhost:9090/status || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
     depends_on:
       - "elasticsearch_searchguard_1"
       - "elasticsearch_searchguard_2"
@@ -136,6 +133,11 @@ services:
     ports:
       - "3000:3000"
     restart: always
+    healthcheck:
+      test: wget --quiet --tries=1 --spider http://localhost:3000/api/health || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 10
     depends_on:
       - "prometheus"
     networks:
