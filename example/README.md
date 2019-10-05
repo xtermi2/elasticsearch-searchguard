@@ -11,11 +11,14 @@ Here is described how to generate self signed certificates with the search-guard
 
 1.  download the latest version of [offline TLS Tool](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22search-guard-tlstool%22)
     -   `wget https://search.maven.org/remotecontent?filepath=com/floragunn/search-guard-tlstool/1.5/search-guard-tlstool-1.5.zip -O search-guard-tlstool.zip`
+
 2.  unzip it
     -   `unzip search-guard-tlstool.zip`
+
 3.  configure your certificates   
     -   the tool brings an _config_ directory with example configs   
     -   we will use `tls-tool_certificate_config.yml` for this example here without any modifications (but of course, you should at least change the passwords when you use this example in production)
+
 4.  execute TLS tool to generate certificates
     ```bash
     rm -rf out && ./tools/sgtlstool.sh -c tls-tool_certificate_config.yml -ca -crt
