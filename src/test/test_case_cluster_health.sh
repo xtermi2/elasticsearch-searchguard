@@ -3,12 +3,20 @@
 general_status=0
 
 echo "calling elasticsearch _cluster/health endpoint"
-health=$(curl -X GET --silent -k -u "elastic:elastic" "https://localhost:9200/_cluster/health")
 
 echo -n "TEST if elasticsearch cluster state is green..."
-status=$(jq -r .status <<<"${health}")
+status=""
+health=""
+itterations=0
+while [[ "${status,,}" != "green" && $itterations -lt 60 ]]; do
+  sleep 1
+  health=$(curl -X GET --silent -k -u "elastic:elastic" "https://localhost:9200/_cluster/health")
+  status=$(jq -r .status <<<"${health}")
+  echo -n "."
+  ((itterations++))
+done
 if [ "${status,,}" != "green" ]; then
-  echo "failed: cluster state is ${status}"
+  echo "failed: cluster state is \"${status}\""
   ((general_status++))
 else
   echo "OK"
