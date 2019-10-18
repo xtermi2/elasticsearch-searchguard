@@ -106,7 +106,7 @@ services:
     networks:
       - esnet
   prometheus:
-    image: prom/prometheus:v2.13.0
+    image: prom/prometheus:v2.13.1
     container_name: prometheus
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
