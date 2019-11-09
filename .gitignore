@@ -5,3 +5,4 @@ example/config
 example/tools
 example/deps
 example/out
+/build.sh
