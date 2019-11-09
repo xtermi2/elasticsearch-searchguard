@@ -38,10 +38,10 @@ Here is described how to generate self signed certificates with the search-guard
 
 3.  test if elasticsearch cluster is up and running: 
 
-    -   `curl -k -u 'elastic:elastic' https://localhost:9200/_cluster/health?pretty`
+    -   `curl -k -u 'elastic:elastic' "https://localhost:9200/_cluster/health?pretty"`
         -   you should see **status: green** and **number_of_nodes: 2**.
 
-    -   `curl -k -u 'elastic:elastic' https://localhost:9200/_searchguard/license?pretty`
+    -   `curl -k -u 'elastic:elastic' "https://localhost:9200/_searchguard/license?pretty"`
         -   here you can also see some cluster information + searchguard license information.
 
     -   `curl -k -u 'elastic:elastic' https://localhost:9200/_prometheus/metrics`
