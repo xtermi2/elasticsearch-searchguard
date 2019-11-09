@@ -10,7 +10,7 @@
 Here is described how to generate self signed certificates with the search-guard [offline TLS Tool](https://docs.search-guard.com/latest/offline-tls-tool), which is save for production.
 
 1.  download the latest version of [offline TLS Tool](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22search-guard-tlstool%22)
-    -   `wget https://search.maven.org/remotecontent?filepath=com/floragunn/search-guard-tlstool/1.5/search-guard-tlstool-1.5.zip -O search-guard-tlstool.zip`
+    -   `wget "https://search.maven.org/remotecontent?filepath=com/floragunn/search-guard-tlstool/1.7/search-guard-tlstool-1.7.zip" -O search-guard-tlstool.zip`
 
 2.  unzip it
     -   `unzip search-guard-tlstool.zip`

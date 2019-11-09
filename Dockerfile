@@ -37,7 +37,7 @@ COPY --chown=elasticsearch:0 ./src/main/resources/bin /usr/local/bin
 
 RUN echo "===> Installing search-guard..." \
     && chmod -R +x /usr/local/bin \
-    && elasticsearch-plugin install -b https://releases.floragunn.com/search-guard-7/$ES_VERSION-$SG_VERSION/search-guard-7-$ES_VERSION-$SG_VERSION.zip \
+    && elasticsearch-plugin install -b "com.floragunn:search-guard-7:$ES_VERSION-$SG_VERSION" \
     && echo "===> Installing elasticsearch-prometheus-exporter..." \
     && elasticsearch-plugin install -b https://github.com/vvanholl/elasticsearch-prometheus-exporter/releases/download/${PROMETHEUS_EXPORTER_VERSION}/prometheus-exporter-${PROMETHEUS_EXPORTER_VERSION}.zip
 
