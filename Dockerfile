@@ -1,5 +1,5 @@
 # Instructions to build this image
-FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.5.1
+FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.5.2
 
 ARG VCS_REF
 ARG BUILD_DATE
@@ -14,9 +14,9 @@ LABEL org.label-schema.vcs-url="https://github.com/xtermi2/elasticsearch-searchg
 LABEL org.label-schema.vcs-ref=$VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE
 
-ENV ES_VERSION "7.5.1"
-ENV SG_VERSION "38.0.0"
-ENV PROMETHEUS_EXPORTER_VERSION "7.5.1.0"
+ENV ES_VERSION "7.5.2"
+ENV SG_VERSION "40.0.0"
+ENV PROMETHEUS_EXPORTER_VERSION "7.5.2.0"
 
 ENV ELASTIC_PWD "changeme"
 ENV KIBANA_PWD "changeme"
@@ -37,7 +37,7 @@ COPY --chown=elasticsearch:0 ./src/main/resources/bin /usr/local/bin
 
 RUN echo "===> Installing search-guard..." \
     && chmod -R +x /usr/local/bin \
-    && elasticsearch-plugin install -b "com.floragunn:search-guard-7:$ES_VERSION-$SG_VERSION" \
+    && elasticsearch-plugin install -b https://releases.floragunn.com/search-guard-7/$ES_VERSION-$SG_VERSION/search-guard-7-$ES_VERSION-$SG_VERSION.zip \
     && echo "===> Installing elasticsearch-prometheus-exporter..." \
     && elasticsearch-plugin install -b https://github.com/vvanholl/elasticsearch-prometheus-exporter/releases/download/${PROMETHEUS_EXPORTER_VERSION}/prometheus-exporter-${PROMETHEUS_EXPORTER_VERSION}.zip
 
