@@ -5,15 +5,17 @@ general_status=0
 echo -n "TEST if kibana status endpoint is returning HTTP 200..."
 RET=1
 count=0
+res=""
 while ((RET != 0 && count < 120)); do
   sleep 1
-  curl -X GET --silent -f "http://localhost:5601/status" >/dev/null 2>&1
+  res=$(curl -X GET --silent -f -u "kibana:kibana" "http://localhost:5601/status") >/dev/null 2>&1
   RET=$?
   echo -n "."
   ((count++))
 done
 if ((RET != 0)); then
   echo "failed!"
+  echo ${res}
   ((general_status++))
 else
   echo "OK"
@@ -24,7 +26,7 @@ overall_status="dummy"
 itterations=0
 while [[ "${overall_status,,}" != "green" && $itterations -lt 20 ]]; do
   sleep 1
-  overall_status=$(curl -X GET --silent -k -f -u "kibana:kibana" "http://localhost:5601/api/status" | jq -r .status.overall.state)
+  overall_status=$(curl -X GET --silent -f -u "kibana:kibana" "http://localhost:5601/api/status" | jq -r .status.overall.state)
   echo -n "."
   ((itterations++))
 done
