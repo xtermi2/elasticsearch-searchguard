@@ -5,7 +5,7 @@ general_status=0
 echo -n "TEST if kibana status endpoint is returning HTTP 200..."
 count=0
 httpStatusCode=""
-while [[ "${httpStatusCode,,}" != "200" && count -lt 120 ]]; do
+while [[ "${httpStatusCode,,}" != "200" && count -lt 150 ]]; do
   sleep 1
   httpStatusCode=$(curl -X GET -LI "http://localhost:5601/status" -o /dev/null -w '%{http_code}\n' -s)
   echo -n "."
