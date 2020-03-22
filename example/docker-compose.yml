@@ -2,7 +2,7 @@
 version: '3.6'
 services:
   elasticsearch_searchguard_1:
-    image: xtermi2/elasticsearch-searchguard
+    image: xtermi2/elasticsearch-searchguard:7.6.0
     container_name: elasticsearch_searchguard_1
     environment:
       node.name: "elasticsearch_searchguard_1"
@@ -34,7 +34,7 @@ services:
     networks:
       - esnet
   elasticsearch_searchguard_2:
-    image: xtermi2/elasticsearch-searchguard
+    image: xtermi2/elasticsearch-searchguard:7.6.0
     container_name: elasticsearch_searchguard_2
     environment:
       node.name: "elasticsearch_searchguard_2"
@@ -124,7 +124,7 @@ services:
     networks:
       - esnet
   grafana:
-    image: grafana/grafana:6.6.2
+    image: grafana/grafana:6.7.1
     container_name: grafana
     volumes:
       - ./monitoring/grafana_provisioning_prometheus_datasource.yaml:/etc/grafana/provisioning/datasources/grafana_provisioning_prometheus_datasource.yaml
