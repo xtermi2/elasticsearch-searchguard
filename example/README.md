@@ -4,6 +4,7 @@
 
 -   docker-compose installed
 -   some basic unix tolls like _wget_, _unzip_, _curl_
+-   your host machine should have at least 3 GB of Memory - preferably 4 GB or more.
 
 ## First get some certificates
 
