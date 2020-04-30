@@ -42,10 +42,12 @@ RUN echo "===> Installing search-guard..." \
     && elasticsearch-plugin install -b https://github.com/vvanholl/elasticsearch-prometheus-exporter/releases/download/${PROMETHEUS_EXPORTER_VERSION}/prometheus-exporter-${PROMETHEUS_EXPORTER_VERSION}.zip
 
 #run Aqua MicroScanner - scan for vulnerabilities
-RUN curl -L -o /tmp/microscanner https://get.aquasec.com/microscanner \
-    && chmod +x /tmp/microscanner \
-    && /tmp/microscanner $MICROSCANNER_TOKEN --continue-on-failure \
-    && rm -rf /tmp/microscanner
+RUN [ -z "$MICROSCANNER_TOKEN" ] && echo "skip Aqua MicroScanner because no token is given!" || ( \
+    curl -L -o /tmp/microscanner https://get.aquasec.com/microscanner \
+        && chmod +x /tmp/microscanner \
+        && /tmp/microscanner $MICROSCANNER_TOKEN --continue-on-failure \
+        && rm -rf /tmp/microscanner \
+    )
 
 ENTRYPOINT ["/usr/local/bin/searchguard-entrypoint.sh"]
 # Dummy overridable parameter parsed by entrypoint

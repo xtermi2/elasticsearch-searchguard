@@ -1,0 +1,5 @@
+{
+  "dockerComposeYmlFilePaths": [
+    "pull-dog-docker-compose.yml"
+  ]
+}
