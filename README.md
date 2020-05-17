@@ -13,6 +13,8 @@ Have a look at [xtermi2/kibana-searchguard](https://github.com/xtermi2/kibana-se
 
 For a complete example with 2 elasticsearch nodes, [kibana](https://www.elastic.co/products/kibana), [prometheus](https://prometheus.io) and [grafana](https://grafana.com) have a look at [xtermi2/elasticsearch-searchguard/example/README.md](https://github.com/xtermi2/elasticsearch-searchguard/tree/master/example)
 
+This docker image is hosted on docker hub: [https://hub.docker.com/r/xtermi2/elasticsearch-searchguard](https://hub.docker.com/r/xtermi2/elasticsearch-searchguard)
+
 ## Image detail description
 
 This docker image extends the original elastic OSS image and installs [search guard](https://search-guard.com) and [elasticsearch-prometheus-exporter](https://github.com/vvanholl/elasticsearch-prometheus-exporter) plugin. 
