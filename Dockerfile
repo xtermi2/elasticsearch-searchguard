@@ -1,5 +1,5 @@
 # Instructions to build this image
-FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.8
+FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.9
 
 ARG VCS_REF
 ARG BUILD_DATE
@@ -13,9 +13,9 @@ LABEL org.label-schema.vcs-url="https://github.com/xtermi2/elasticsearch-searchg
 LABEL org.label-schema.vcs-ref=$VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE
 
-ENV ES_VERSION "6.8.8"
+ENV ES_VERSION "6.8.9"
 ENV SG_VERSION "25.6"
-ENV PROMETHEUS_EXPORTER_VERSION "6.8.8.0"
+ENV PROMETHEUS_EXPORTER_VERSION "6.8.9.0"
 
 ENV ELASTIC_PWD "changeme"
 ENV KIBANA_PWD "changeme"
