@@ -1,5 +1,8 @@
 {
   "dockerComposeYmlFilePaths": [
     "docker-compose.yml"
+  ],
+  "additionalPaths": [
+    "src/main/resources"
   ]
 }
