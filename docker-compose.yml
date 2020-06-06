@@ -1,4 +1,4 @@
-# docker compose to startup a local ES cluster - pull-dog version (https://github.com/apps/pull-dog)
+# docker compose to startup a local ES cluster - pull-dog version (https://github.com/apps/pull-dog / https://dogger.io/pull-dog)
 version: '3.6'
 services:
   elasticsearch_searchguard_1:
