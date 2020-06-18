@@ -22,7 +22,7 @@ Here is described how to generate self signed certificates with the search-guard
 
 4.  execute TLS tool to generate certificates
     ```bash
-    rm -rf out && ./tools/sgtlstool.sh -c tls-tool_certificate_config.yml -ca -crt
+    sudo rm -rf out && sudo ./tools/sgtlstool.sh -c tls-tool_certificate_config.yml -ca -crt
     ```
     -   root-ca: is a self signed CA 
     -   node: is a certificate for all nodes
