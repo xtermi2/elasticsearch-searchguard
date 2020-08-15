@@ -2,7 +2,7 @@
 version: '3.6'
 services:
   elasticsearch_searchguard_1:
-    image: xtermi2/elasticsearch-searchguard:7.8.0
+    image: xtermi2/elasticsearch-searchguard:7.8.1
     container_name: elasticsearch_searchguard_1
     environment:
       node.name: "elasticsearch_searchguard_1"
@@ -34,7 +34,7 @@ services:
     networks:
       - esnet
   elasticsearch_searchguard_2:
-    image: xtermi2/elasticsearch-searchguard:7.8.0
+    image: xtermi2/elasticsearch-searchguard:7.8.1
     container_name: elasticsearch_searchguard_2
     environment:
       node.name: "elasticsearch_searchguard_2"
@@ -66,7 +66,7 @@ services:
     networks:
       - esnet
   kibana:
-    image: xtermi2/kibana-searchguard:7.8.0
+    image: xtermi2/kibana-searchguard:7.8.1
     container_name: kibana
     environment:
       ELASTICSEARCH_HOSTS: "https://elasticsearch_searchguard_1:9200"
@@ -87,7 +87,7 @@ services:
     networks:
       - esnet
   filebeat:
-    image: docker.elastic.co/beats/filebeat-oss:7.8.0
+    image: docker.elastic.co/beats/filebeat-oss:7.8.1
     container_name: filebeat
     # to overwrite the -e that disables logging to file and disable strict permission checks for filebeat.yml!
     command: -c filebeat.yml -strict.perms=false
