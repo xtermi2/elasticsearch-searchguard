@@ -64,7 +64,7 @@ services:
     networks:
       - esnet
   kibana:
-    image: xtermi2/kibana-searchguard:7.9.2
+    image: xtermi2/kibana-searchguard:7.9.3
     container_name: kibana
     environment:
       ELASTICSEARCH_HOSTS: "https://elasticsearch_searchguard_1:9200"
@@ -84,7 +84,7 @@ services:
     networks:
       - esnet
   filebeat:
-    image: docker.elastic.co/beats/filebeat-oss:7.9.2
+    image: docker.elastic.co/beats/filebeat-oss:7.9.3
     container_name: filebeat
     # to overwrite the -e that disables logging to file and disable strict permission checks for filebeat.yml!
     command: -c filebeat.yml -strict.perms=false
