@@ -40,10 +40,10 @@ get_docker_tags() {
   if [[ $1 =~ $kREGEX_TAG ]]; then
     # split the tag
     IFS='.' read -r -a array <<< "$1"
-    echo "latest${DOCKER_TAG_SEPARATOR}${array[0]}${DOCKER_TAG_SEPARATOR}${array[0]}.${array[1]}${DOCKER_TAG_SEPARATOR}$1"
+    echo "${array[0]}${DOCKER_TAG_SEPARATOR}${array[0]}.${array[1]}${DOCKER_TAG_SEPARATOR}$1"
   else
     # just return the tag
-    echo "latest${DOCKER_TAG_SEPARATOR}${1}"
+    echo "${1}"
   fi
 }
 
