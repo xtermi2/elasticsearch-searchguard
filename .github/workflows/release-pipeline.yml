@@ -19,14 +19,14 @@ jobs:
         uses: docker-practice/actions-setup-docker@v1
       - name: Docker build
         run: docker build --build-arg VCS_REF=`git rev-parse HEAD` --build-arg BUILD_DATE=`date --iso-8601=seconds` -t $IMAGE_NAME:latest --no-cache .
-      - name: install jq (required for testing)
-        run:  sudo apt-get install -y jq
-      - name: increas max_map_count (required for testing)
-        run: sudo sysctl -w vm.max_map_count=262144
-      - name: set test-cert file permissions (required for testing)
-        run: sudo chmod -R 777 src/test/test-certs && sudo chown 1000:0 -R src/test/test-certs
-      - name: test Docker Image
-        run: ./src/test/test.sh
+#      - name: install jq (required for testing)
+#        run:  sudo apt-get install -y jq
+#      - name: increas max_map_count (required for testing)
+#        run: sudo sysctl -w vm.max_map_count=262144
+#      - name: set test-cert file permissions (required for testing)
+#        run: sudo chmod -R 777 src/test/test-certs && sudo chown 1000:0 -R src/test/test-certs
+#      - name: test Docker Image
+#        run: ./src/test/test.sh
       - name: print image details
         run: docker inspect $IMAGE_NAME
 
