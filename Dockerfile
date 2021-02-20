@@ -3,7 +3,6 @@ FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
 
 ARG VCS_REF
 ARG BUILD_DATE
-ARG MICROSCANNER_TOKEN
 
 LABEL description="elasticsearch secured with search-guard"
 LABEL org.label-schema.name="elasticsearch-searchguard"
@@ -41,13 +40,10 @@ RUN echo "===> Installing search-guard..." \
     && echo "===> Installing elasticsearch-prometheus-exporter..." \
     && elasticsearch-plugin install -b https://github.com/vvanholl/elasticsearch-prometheus-exporter/releases/download/${PROMETHEUS_EXPORTER_VERSION}/prometheus-exporter-${PROMETHEUS_EXPORTER_VERSION}.zip
 
-#run Aqua MicroScanner - scan for vulnerabilities
-RUN [ -z "$MICROSCANNER_TOKEN" ] && echo "skip Aqua MicroScanner because no token is given!" || ( \
-    curl -L -o /tmp/microscanner https://get.aquasec.com/microscanner \
-        && chmod +x /tmp/microscanner \
-        && /tmp/microscanner $MICROSCANNER_TOKEN --continue-on-failure \
-        && rm -rf /tmp/microscanner \
-    )
+#run Aqua's trivy - scan for vulnerabilities
+RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /tmp \
+    && /tmp/trivy filesystem --no-progress / \
+    && rm -rf /tmp/microscanner
 
 ENTRYPOINT ["/usr/local/bin/searchguard-entrypoint.sh"]
 # Dummy overridable parameter parsed by entrypoint
