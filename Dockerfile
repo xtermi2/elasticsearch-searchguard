@@ -1,5 +1,5 @@
 # Instructions to build this image
-FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+FROM docker.elastic.co/elasticsearch/elasticsearch:7.11.1
 
 ARG VCS_REF
 ARG BUILD_DATE
@@ -13,9 +13,9 @@ LABEL org.label-schema.vcs-url="https://github.com/xtermi2/elasticsearch-searchg
 LABEL org.label-schema.vcs-ref=$VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE
 
-ENV ES_VERSION "7.10.2"
-ENV SG_VERSION "48.0.0"
-ENV PROMETHEUS_EXPORTER_VERSION "7.10.2.0"
+ENV ES_VERSION "7.11.1"
+ENV SG_VERSION "50.0.0"
+ENV PROMETHEUS_EXPORTER_VERSION "7.11.1.0"
 
 ENV ELASTIC_PWD "changeme"
 ENV KIBANA_PWD "changeme"
@@ -43,7 +43,7 @@ RUN echo "===> Installing search-guard..." \
 #run Aqua's trivy - scan for vulnerabilities
 RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /tmp \
     && /tmp/trivy filesystem --no-progress / \
-    && rm -rf /tmp/microscanner
+    && rm -rf /tmp/trivy
 
 ENTRYPOINT ["/usr/local/bin/searchguard-entrypoint.sh"]
 # Dummy overridable parameter parsed by entrypoint

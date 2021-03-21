@@ -1,4 +1,4 @@
-# [Elasticsearch](https://www.elastic.co/products/elasticsearch) [OSS Docker Image](https://www.docker.elastic.co/) with integrated [search guard](https://search-guard.com) and [elasticsearch-prometheus-exporter](https://github.com/vvanholl/elasticsearch-prometheus-exporter) plugin
+# [Elasticsearch](https://www.elastic.co/products/elasticsearch) [Docker Image](https://www.docker.elastic.co/) with integrated [search guard](https://search-guard.com) and [elasticsearch-prometheus-exporter](https://github.com/vvanholl/elasticsearch-prometheus-exporter) plugin
 
 [![](https://images.microbadger.com/badges/version/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
 [![](https://images.microbadger.com/badges/image/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
@@ -17,7 +17,7 @@ This docker image is hosted on docker hub: [https://hub.docker.com/r/xtermi2/ela
 
 ## Image detail description
 
-This docker image extends the original elastic OSS image and installs [search guard](https://search-guard.com) and [elasticsearch-prometheus-exporter](https://github.com/vvanholl/elasticsearch-prometheus-exporter) plugin. 
+This docker image extends the original elastic image and installs [search guard](https://search-guard.com) and [elasticsearch-prometheus-exporter](https://github.com/vvanholl/elasticsearch-prometheus-exporter) plugin. 
 
 At startup search-guard is configured with 3 default users:
 
@@ -60,6 +60,7 @@ You can set it permanently by modifying `vm.max_map_count` setting in your `/etc
 You also have to set the searchguard related TLS [configuration](https://docs.search-guard.com/latest/configuring-tls). 
 All followin paths in this paragraph are relative to `/usr/share/elasticsearch/config/`:
 
+-   **xpack.security.enabled: "false"**: since elasticsearch 7.11 this is required, because elasticsearch stopped providing the OSS image and the non-OSS image, which is now used as base image, contains the x-pack-security plugin, which clashes with search-guard. If you get a `IllegalArgumentException: Cannot have additional setting [http.type] in plugin [search-guard-7], already added in plugin [x-pack-security]` you have forgotten to disable the x-pack-security plugin.
 -   **searchguard.ssl.transport.pemcert_filepath** (example=certificates/node.pem): path to node certificate
 -   **searchguard.ssl.transport.pemkey_filepath** (example=certificates/node.key): path to node private key
 -   **searchguard.ssl.transport.pemkey_password** (example=default-secret): password for node private key
