@@ -1,0 +1,64 @@
+name: "Build and Release Pipeline"
+
+on:
+  push:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: '30 5 * * *'
+
+env:
+  IMAGE_NAME: "xtermi2/elasticsearch-searchguard"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Docker Env
+        uses: docker-practice/actions-setup-docker@v1
+      - name: Docker build
+        run: docker build --build-arg VCS_REF=`git rev-parse HEAD` --build-arg BUILD_DATE=`date --iso-8601=seconds` -t $IMAGE_NAME:latest --no-cache .
+      - name: install jq (required for testing)
+        run:  sudo apt-get install -y jq
+      - name: increas max_map_count (required for testing)
+        run: sudo sysctl -w vm.max_map_count=262144
+      - name: set test-cert file permissions (required for testing)
+        run: sudo chmod -R 777 src/test/test-certs && sudo chown 1000:0 -R src/test/test-certs
+      - name: test Docker Image
+        run: ./src/test/test.sh
+      - name: print image details
+        run: docker inspect $IMAGE_NAME
+
+  release:
+    # Release to dockerhub and create Github release
+    needs: [build-and-test]
+    if: ${{ github.repository == 'xtermi2/elasticsearch-searchguard' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Docker Env
+        uses: docker-practice/actions-setup-docker@v1
+      - name: Docker build
+        run: docker build --build-arg VCS_REF=`git rev-parse HEAD` --build-arg BUILD_DATE=`date --iso-8601=seconds` -t $IMAGE_NAME:latest --no-cache .
+      - name: Get the curent tag
+        id: get_tag
+        run: echo ::set-output name=TAG_VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: Push image to dockerhub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: ./deployToDockerhub.sh "${{ steps.get_tag.outputs.TAG_VERSION }}" "$IMAGE_NAME"
+      - name: Create Github Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ steps.get_tag.outputs.TAG_VERSION }}
+          release_name: ${{ steps.get_tag.outputs.TAG_VERSION }}
+          body: "Support Elasticsearch ${{ steps.get_tag.outputs.TAG_VERSION }}"
+          draft: false
+          prerelease: false
+
