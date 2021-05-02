@@ -29,6 +29,8 @@ jobs:
         run: ./src/test/test.sh
       - name: print image details
         run: docker inspect $IMAGE_NAME
+      - name: run Aqua's trivy - scan for vulnerabilities
+        run: docker run -i --rm -u 0 $IMAGE_NAME:latest bash -c 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /tmp && /tmp/trivy filesystem --no-progress --severity HIGH,CRITICAL /'
 
   release:
     # Release to dockerhub and create Github release

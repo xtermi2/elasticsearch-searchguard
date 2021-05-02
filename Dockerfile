@@ -1,5 +1,5 @@
 # Instructions to build this image
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.11.2
+FROM docker.elastic.co/elasticsearch/elasticsearch:7.12.0
 
 ARG VCS_REF
 ARG BUILD_DATE
@@ -13,9 +13,9 @@ LABEL org.label-schema.vcs-url="https://github.com/xtermi2/elasticsearch-searchg
 LABEL org.label-schema.vcs-ref=$VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE
 
-ENV ES_VERSION "7.11.2"
-ENV SG_VERSION "50.0.0"
-ENV PROMETHEUS_EXPORTER_VERSION "7.11.2.0"
+ENV ES_VERSION "7.12.0"
+ENV SG_VERSION "50.1.0"
+ENV PROMETHEUS_EXPORTER_VERSION "7.12.0.0"
 
 ENV ELASTIC_PWD "changeme"
 ENV KIBANA_PWD "changeme"
@@ -39,11 +39,6 @@ RUN echo "===> Installing search-guard..." \
     && elasticsearch-plugin install -b https://maven.search-guard.com/search-guard-suite-release/com/floragunn/search-guard-suite-plugin/$ES_VERSION-$SG_VERSION/search-guard-suite-plugin-$ES_VERSION-$SG_VERSION.zip \
     && echo "===> Installing elasticsearch-prometheus-exporter..." \
     && elasticsearch-plugin install -b https://github.com/vvanholl/elasticsearch-prometheus-exporter/releases/download/${PROMETHEUS_EXPORTER_VERSION}/prometheus-exporter-${PROMETHEUS_EXPORTER_VERSION}.zip
-
-#run Aqua's trivy - scan for vulnerabilities
-RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /tmp \
-    && /tmp/trivy filesystem --no-progress / \
-    && rm -rf /tmp/trivy
 
 ENTRYPOINT ["/usr/local/bin/searchguard-entrypoint.sh"]
 # Dummy overridable parameter parsed by entrypoint
