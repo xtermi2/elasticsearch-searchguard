@@ -27,7 +27,7 @@ index=$(curl -X GET --silent -k -u "kibana:kibana" "https://localhost:9200/fileb
 
 echo -n "TEST if filebeat index exists..."
 meta_beat=$(jq -r '.[].mappings._meta.version' <<<"${index}")
-if [ "${meta_beat}" != "7.12.0" ]; then
+if [ "${meta_beat}" != "7.12.1" ]; then
   echo "failed: mappings._meta.version is unexpected \"${meta_beat}\"; response=\"${index}\""
   ((general_status++))
 else
