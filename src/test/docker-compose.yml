@@ -9,7 +9,7 @@ services:
       discovery.seed_hosts: elasticsearch_searchguard_2
       cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
       xpack.security.enabled: "false"
-      ES_JAVA_OPTS: "-Xms192m -Xmx192m"
+      ES_JAVA_OPTS: "-Xms256m -Xmx256m"
       ROOT_CA: "root-ca.pem"
       ADMIN_PEM: "admin.pem"
       ADMIN_KEY: "admin.key"
@@ -41,7 +41,7 @@ services:
       discovery.seed_hosts: elasticsearch_searchguard_1
       cluster.initial_master_nodes: "elasticsearch_searchguard_1, elasticsearch_searchguard_2"
       xpack.security.enabled: "false"
-      ES_JAVA_OPTS: "-Xms192m -Xmx192m"
+      ES_JAVA_OPTS: "-Xms256m -Xmx256m"
       ROOT_CA: "root-ca.pem"
       ADMIN_PEM: "admin.pem"
       ADMIN_KEY: "admin.key"
@@ -66,7 +66,7 @@ services:
     networks:
       - esnet
   kibana:
-    image: xtermi2/kibana-searchguard:7.12.1
+    image: xtermi2/kibana-searchguard:7.13.2
     container_name: kibana
     environment:
       XPACK_SECURITY_ENABLED: "false"
@@ -87,7 +87,7 @@ services:
     networks:
       - esnet
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.12.1
+    image: docker.elastic.co/beats/filebeat:7.13.2
     container_name: filebeat
     # to overwrite the -e that disables logging to file and disable strict permission checks for filebeat.yml!
     command: -c filebeat.yml -strict.perms=false
