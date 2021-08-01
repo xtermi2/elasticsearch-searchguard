@@ -96,7 +96,7 @@ services:
     networks:
       - esnet
   kibana:
-    image: xtermi2/kibana-searchguard:6.8.13
+    image: xtermi2/kibana-searchguard:6.8.17
     container_name: kibana
     environment:
       ELASTICSEARCH_HOSTS: "https://elasticsearch_searchguard_1:9200"
