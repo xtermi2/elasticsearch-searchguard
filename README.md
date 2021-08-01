@@ -3,7 +3,7 @@
 [![](https://images.microbadger.com/badges/version/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
 [![](https://images.microbadger.com/badges/image/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
 [![](https://images.microbadger.com/badges/commit/xtermi2/elasticsearch-searchguard.svg)](https://microbadger.com/images/xtermi2/elasticsearch-searchguard)
-[![Build Status](https://travis-ci.org/xtermi2/elasticsearch-searchguard.svg?branch=master)](https://travis-ci.org/xtermi2/elasticsearch-searchguard)
+[![Build and Release Pipeline](https://github.com/xtermi2/elasticsearch-searchguard/actions/workflows/release-pipeline.yml/badge.svg)](https://github.com/xtermi2/elasticsearch-searchguard/actions/workflows/release-pipeline.yml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b2a9a55db2b245c4b0e69e21b9e196b6)](https://app.codacy.com/app/xtermi2/elasticsearch-searchguard?utm_source=github.com&utm_medium=referral&utm_content=xtermi2/elasticsearch-searchguard&utm_campaign=Badge_Grade_Dashboard)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
